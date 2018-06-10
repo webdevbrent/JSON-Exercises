@@ -64,6 +64,8 @@
         function updateJSON() {
             var key = event.target.value;
             dataJSON[key].status = event.target.checked
+            // Update session value
+            sessionStorage['task'] = JSON.stringify(dataJSON);
         }
 
     </script>
