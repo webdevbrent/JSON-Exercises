@@ -7,11 +7,14 @@
 
 <body>
     <h1>AJAX</h1>
-    <div id="output"></div>
+    <div id="output">
+    </div>
+    <ul id="info"></ul>
     <button id="loadNew">Load</button>
 
     <script>
         var output = document.getElementById('output');
+        var info = document.getElementById('info');
         var buttonClick = document.getElementById('loadNew');
         buttonClick.addEventListener('click', function () {
             loadAjax();
@@ -27,8 +30,12 @@
                 //console.log('state changed', request.readyState, request.status)
                 if (request.readyState == 4 && request.status == 200) {
 
-                    var jsonData = JSON.parse(request.responseText);
-                    console.log(jsonData);
+                    var json = JSON.parse(request.responseText);
+                    var data = json.results[0];
+                    var name = '<h1>' + data.name.title + ' ' + data.name.first + ' ' + data.name.last + '</hr>'
+                    var message = name + '<br><img src=' + data.picture.large + '>';
+                    output.innerHTML = message;
+                    console.log(data);
 
                 }
             }
