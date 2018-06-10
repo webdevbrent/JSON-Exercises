@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Todo</title>
+</head>
+
+<body>
+    <h1>JSON Todo</h1>
+    <div id="output">
+        <ul id="taskList"></ul>
+    </div>
+    <script>
+
+        // Stringify'd JSON data representation
+        var data = '{"tasks":{"Cut Grass":false,"Clean Room":false,"Go to Gym":true,"Make dinner":false}}';
+
+        // Parse string data converting to Javascript object
+        var dataJSON = JSON.parse(data);
+
+        // Hookup output and tasklist
+        var output = document.getElementById('output');
+        var taskList = document.querySelector('#taskList');
+
+        // Loop through JSON data and add to taskList element
+        for (var key in dataJSON.tasks) {
+            // console.log(key, dataJSON.tasks[key]);
+            var status = !dataJSON.tasks[key] ? '' : 'checked';
+            var html = '<li>' + key + '<input type="checkbox" value="' + key + '" ' + status + '></li>';
+            taskList.innerHTML += html;
+        }
+        // Log current Object
+        console.log(dataJSON);
+    </script>
+</body>
+
+</html>
