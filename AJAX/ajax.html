@@ -19,23 +19,25 @@
             loadAjax();
         })
 
-
         function loadAjax() {
-            var url = 'https://api.chucknorris.io/jokes/random';
+            const url = 'https://api.chucknorris.io/jokes/random';
             fetch(url)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (json) {
-                    console.log(json);
-                    let html = '<img src=' + json.icon_url + '>' + '<br>' + '<h2>' + json.value + '</h2>'
-                    document.querySelector('#output').innerHTML = html;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+                .then(resJSON)
+                .then(outputJSON)
+                .catch(errorJSON)
         }
 
+        function resJSON(response) {
+            return response.json()
+        }
+
+        function outputJSON(json) {
+            let html = '<img src=' + json.icon_url + '>' + '<br>' + '<h2>' + json.value + '</h2>'
+            return document.querySelector('#output').innerHTML = html;
+        }
+        function errorJSON(error) {
+            console.log(error);
+        }
 
     </script>
 </body>
