@@ -30,6 +30,27 @@
             var html = '<li>' + key + '<input type="checkbox" value="' + key + '" ' + status + '></li>';
             taskList.innerHTML += html;
         }
+
+        addEvents();
+
+        // add event listener to detect if is checked
+        function addEvents() {
+            // Grab all checkboxes
+            var checkBoxes = document.querySelectorAll('#taskList input[type="checkbox"]');
+            // Onchange loop
+            for (var index in checkBoxes) {
+                checkBoxes[index].onchange = updateJSON;
+            }
+            console.log(checkBoxes);
+        }
+
+        // Update JSON object
+        function updateJSON() {
+            var key = event.target.value;
+            console.log(key, event.target.checked);
+            dataJSON.tasks[key] = event.target.checked
+        }
+
         // Log current Object
         console.log(dataJSON);
     </script>
