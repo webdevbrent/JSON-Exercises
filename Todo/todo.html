@@ -12,6 +12,42 @@
         <ul id="taskList"></ul>
     </div>
     <script>
+        var data = '[{"info":"Cut Grass","status":true},{"info":"Clean Room","status":false},{"info":"Go to Gym","status":false},{"info":"Make Dinner","status":false}]'
+
+        var dataJSON = JSON.parse(data);
+        // Hookup output and tasklist
+        var output = document.getElementById('output');
+        var taskList = document.querySelector('#taskList');
+        // Loop through JSON data and add to taskList element
+        for (var key in dataJSON) {
+            console.log(key, dataJSON[key]);
+            var status = dataJSON[key].status ? 'checked' : '';
+            var html = '<li>' + dataJSON[key].info + '<input type="checkbox" value="' + key + '" ' + status + '></li>';
+            taskList.innerHTML += html;
+        }
+        addEvents();
+
+        // add event listener to detect if is checked
+        function addEvents() {
+            // Grab all checkboxes
+            var checkBoxes = document.querySelectorAll('#taskList input[type="checkbox"]');
+            // Onchange loop
+            for (var index in checkBoxes) {
+                checkBoxes[index].onchange = updateJSON;
+            }
+            console.log(checkBoxes);
+        }
+
+        // Update JSON object
+        function updateJSON() {
+            var key = event.target.value;
+            console.log(key, event.target.checked);
+            dataJSON[key].status = event.target.checked
+        }
+
+    </script>
+
+    <!-- <script>
 
         // Stringify'd JSON data representation
         var data = '{"tasks":{"Cut Grass":false,"Clean Room":false,"Go to Gym":true,"Make dinner":false}}';
@@ -53,7 +89,7 @@
 
         // Log current Object
         console.log(dataJSON);
-    </script>
+    </script> -->
 </body>
 
 </html>
