@@ -21,22 +21,19 @@
 
 
         function loadAjax() {
-            var request = new XMLHttpRequest();
-            request.onreadystatechange = function () {
-                //console.log('state changed', request.readyState, request.status)
-                if (request.readyState == 4 && request.status == 200) {
-
-                    var json = JSON.parse(request.responseText);
-                    var icon = '<img src=' + json.icon_url + '>';
-                    var data = json.value;
-                    var message = data;
-                    output.innerHTML = icon + '<br>' + '<h2>' + message + '</h2>';
-                    console.log(data);
-
-                }
-            }
-            request.open('GET', 'https://api.chucknorris.io/jokes/random', true);
-            request.send();
+            var url = 'https://api.chucknorris.io/jokes/random';
+            fetch(url)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (json) {
+                    console.log(json);
+                    let html = '<img src=' + json.icon_url + '>' + '<br>' + '<h2>' + json.value + '</h2>'
+                    document.querySelector('#output').innerHTML = html;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
 
 
