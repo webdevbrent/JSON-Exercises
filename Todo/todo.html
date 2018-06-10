@@ -27,18 +27,32 @@
         })
 
         window.onload = function () {
-            if (sessionStorage['task'] != null) {
-                dataJSON = JSON.parse(sessionStorage['task']);
+            if (sessionStorage['tasklist'] != null) {
+                dataJSON = JSON.parse(sessionStorage['tasklist']);
+                buildCheckboxes(dataJSON);
             } else {
-                var data = '[{"info":"Cut Grass","status":false},{"info":"Clean Room","status":false},{"info":"Go to Gym","status":false},{"info":"Make Dinner","status":false}]';
-                dataJSON = JSON.parse(data);
+                //var data = '[{"info":"Cut Grass","status":false},{"info":"Clean Room","status":false},{"info":"Go to Gym","status":false},{"info":"Make Dinner","status":false}]';
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText;
+                        dataJSON = JSON.parse(data);
+                        buildCheckboxes(dataJSON);
+                    }
+                }
+                xhr.open("GET", 'http://api.myjson.com/bins/1dqyui', true);
+                xhr.send();
+
             }
-            buildCheckboxes(dataJSON);
+
         }
 
         function addNewItem(data) {
             addCheckbox(data, dataJSON.length)
             dataJSON.push(data)
+            sessionStorage['tasklist'] = JSON.stringify(dataJSON);
         }
 
         function addCheckbox(data, key) {
@@ -79,7 +93,7 @@
             var key = event.target.value;
             dataJSON[key].status = event.target.checked
             // Update session value
-            sessionStorage['task'] = JSON.stringify(dataJSON);
+            sessionStorage['tasklist'] = JSON.stringify(dataJSON);
         }
 
     </script>
