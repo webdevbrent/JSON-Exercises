@@ -20,6 +20,11 @@
         // Hookup output and tasklist
         var output = document.getElementById('output');
         var taskList = document.querySelector('#taskList');
+        document.getElementById('myForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var tempValue = document.querySelector('input[name="task"]').value;
+            addNewItem({ "info": tempValue, "status": false })
+        })
 
         window.onload = function () {
             if (sessionStorage['task'] != null) {
@@ -31,27 +36,33 @@
             buildCheckboxes(dataJSON);
         }
 
+        function addNewItem(data) {
+            addCheckbox(data, dataJSON.length)
+            dataJSON.push(data)
+        }
+
+        function addCheckbox(data, key) {
+            var li = document.createElement('li');
+            var checkbox = document.createElement('input');
+            var textInside = document.createTextNode(data.info);
+            checkbox.type = 'checkbox';
+            checkbox.value = key;
+            checkbox.checked = data.status;
+            checkbox.setAttribute('onchange', 'updateJSON()');
+            li.appendChild(textInside);
+            li.appendChild(checkbox);
+            document.querySelector('#taskList').appendChild(li);
+        }
+
         function buildCheckboxes(data) {
             // Loop through JSON data and add to taskList element
             for (var key in data) {
-                var status = data[key].status ? 'checked' : '';
-                var html = '<li>' + data[key].info + '<input type="checkbox" value="' + key + '" ' + status + '></li>';
-                taskList.innerHTML += html;
-            }
-        }
-
-        addEvents();
-
-        function addEvents() {
-            var checkBoxes = document.querySelectorAll('#taskList input[type="checkbox"]');
-            for (var index in checkBoxes) {
-                checkBoxes[index].onchange = updateJSON;
+                addCheckbox(data[key], key)
             }
         }
 
         function updateJSON() {
             var key = event.target.value;
-            console.log(key, event.target.checked);
             dataJSON[key].status = event.target.checked
         }
 
