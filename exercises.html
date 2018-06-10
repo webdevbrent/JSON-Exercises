@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON</title>
+</head>
+
+<body>
+    <h1>Learn JSON</h1>
+    <div id="output"></div>
+    <form id="myForm">
+        <input type="text" name="first" value="Laurence">
+        <br>
+        <input type="text" name="last" value="Svekis">
+        <br>
+        <input type="text" name="email" value="test@test.com">
+        <br>
+        <input type="text" name="company" value="Discoveryvip">
+        <br>
+        <input type="submit" value="submit">
+    </form>
+    <script type="text/javascript">
+        var myForm = document.getElementById('myForm');
+
+        window.onload = function () {
+            if (sessionStorage['person'] != null) {
+                var data = JSON.parse(sessionStorage['person'])
+                var message = 'Welcome ' + data.first + ' ' + data.last + ' to the site!!!';
+                document.getElementById('output').innerHTML = message;
+                console.log(data)
+            }
+        }
+
+        myForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var data = JSON.stringify(formData(myForm));
+            if (data) {
+                sessionStorage['person'] = data;
+            }
+            console.log(data)
+        })
+
+        function formData(form) {
+            var el = form.querySelectorAll('input[type="text"]');
+            var myData = {};
+            for (var x = 0; x < el.length; x++) {
+                var name = el[x].name;
+                var value = el[x].value;
+                myData[name] = value
+            }
+
+            return myData;
+        }
+
+    </script>
+
+    <!-- <script>
+        // https://randomuser.me/api
+        var data = '{"results":[{"gender":"male","name":{"title":"mr","first":"omer","last":"nunes"},"location":{"street":"9901 rua dezessete ","city":"araguari","state":"amapá","postcode":57515},"email":"omer.nunes@example.com","login":{"username":"whitemouse856","password":"jackoff","salt":"CgN3425m","md5":"9d6fe74fdb6ca6c8af806b9e532829a9","sha1":"f117f6ea7de5cbdc31910ba3d2163166e9a92684","sha256":"bfe0f2751c7492fb9e59b8729950ddb97772210d5fc412772b19103f8524fe63"},"dob":"1960-06-01 18:34:25","registered":"2009-02-14 05:21:00","phone":"(27) 5081-7926","cell":"(88) 6474-2605","id":{"name":"","value":null},"picture":{"large":"https://randomuser.me/api/portraits/men/62.jpg","medium":"https://randomuser.me/api/portraits/med/men/62.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/men/62.jpg"},"nat":"BR"}],"info":{"seed":"8d6debd4f66d25f1","results":1,"page":1,"version":"1.1"}}'
+
+
+
+        var dataJSON = JSON.parse(data);
+        var person = dataJSON.results[0]
+        var image = person.picture.thumbnail;
+        var firstName = person.name.first
+        var lastName = person.name.last
+        var username = person.login.username;
+        console.log(person.picture.large);
+
+        document.getElementById('output').innerHTML = "<img src=" + image + ">" + "<br>" +
+            "First Name: " + firstName + "<br>" + "Last Name: " + lastName + "<br>" + "Username: " + username
+
+        var strMe = JSON.stringify(dataJSON)
+
+        console.log(strMe);
+
+    </script> -->
+</body>
+
+</html>
