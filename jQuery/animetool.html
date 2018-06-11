@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Anime API Query Tool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="easy-autocomplete.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="display-4 text-center mb-5" name="top">ANIME API QUERY TOOL</h1>
+        <form>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control p-3" id="anime-query" placeholder="Search...">
+                    </div>
+                    <div class="col">
+                        <label for="select">Anime Type</label>
+                        <select id="anime-type" name="type" class="custom-select">
+                            <option value="anime">anime</option>
+                            <option value="manga">manga</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="col mt-2">
+                            <button id="search" name="submit" type="submit" class="btn btn-lg btn-success">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="output">
+            <ul class="list-unstyled" id="myList"></ul>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="jquery.easy-autocomplete.min.js"></script>
+    <script src="animeSearch.js"></script>
+</body>
+
+</html>
